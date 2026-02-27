@@ -33,16 +33,24 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  function redirectWithCookies(url: URL) {
+    const redirectResponse = NextResponse.redirect(url);
+    response.cookies.getAll().forEach(({ name, value, options }) =>
+      redirectResponse.cookies.set(name, value, options)
+    );
+    return redirectResponse;
+  }
+
   if (isDashboardPath(request.nextUrl.pathname) && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
-    return NextResponse.redirect(url);
+    return redirectWithCookies(url);
   }
 
   if (request.nextUrl.pathname === "/" && user) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    return redirectWithCookies(url);
   }
 
   return response;
