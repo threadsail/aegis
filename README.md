@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is the **Aegis** ticket system: a minimal Next.js app with Supabase auth and light-mode UI.
+
+## Aegis setup
+
+1. **Supabase**: Create a project at [supabase.com](https://supabase.com). In Authentication > Providers, enable Email, Google, and Apple as needed.
+
+2. **Environment**: Copy `.env.local.example` to `.env.local` and set:
+   - `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` from the Supabase project (Settings > API).
+
+3. **Database**: In the Supabase SQL editor, run the migration in `supabase/migrations/001_initial_schema.sql` to create `profiles`, `tickets`, and `company_settings` with RLS.
+
+4. **Test user**: Create a user via Supabase Auth (e.g. Email signup) and optionally set their `role` to `manager` in the `profiles` table.
 
 ## Getting Started
 
